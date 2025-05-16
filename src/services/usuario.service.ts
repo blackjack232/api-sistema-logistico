@@ -19,7 +19,6 @@ export const usuarioService: IUsuarioService = {
     if (usuario.activo === 0) throw new Error('Usuario inactivo');
 
     const match = await bcrypt.compare(contrasena, usuario.contrasena);
-    console.log("usuario match", match)
     if (!match) throw new Error('Credenciales inválidas');
     const token = generarToken({ id: usuario.id });
     return { token };
