@@ -1,7 +1,10 @@
 export interface Usuario {
   id: number;
   nombre: string;
-  correoElectronico: string;
+  apellido: string;
+  identificacion : string;
+  correo_electronico: string;
   contrasena: string;
-  tipoUsuario :string
+  tipo_usuario_id: number;
+  activo :number;
 }
