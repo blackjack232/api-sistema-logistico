@@ -1,7 +1,18 @@
 export const INSERT_USUARIO_QUERY = `
-  INSERT INTO usuario
-    (nombre, apellido, identificacion, correo_electronico, contrasena, tipo_usuario_id, activo)
-  VALUES ($1, $2, $3, $4, $5 ,$6 , $7)
+  INSERT INTO usuario (
+    nombre,
+    apellido,
+    identificacion,
+    correo_electronico,
+    contrasena,
+    tipo_usuario_id,
+    activo,
+    telefono,
+    fecha_creacion,
+    usuario_creacion,
+    fecha_modificacion,
+    usuario_modificacion
+  ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
   RETURNING *;
 `;
 
@@ -26,6 +37,8 @@ export const INSERT_ENVIO_QUERY = `
     usuario_destinatario_id,
     cedula_remitente,
     cedula_destinatario,
+    telefono_remitente,
+    telefono_destinatario,
     direccion_envio,
     direccion_destino,
     peso,
@@ -37,8 +50,11 @@ export const INSERT_ENVIO_QUERY = `
     fecha_modificacion,
     usuario_creacion_id,
     usuario_modificacion_id
-  ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)
+  ) VALUES (
+    $1, $2, $3, $4, $5, $6, $7, 
+    $8, $9, $10, $11, $12, $13, 
+    $14, $15, $16, $17, $18
+  )
   RETURNING *;
 `;
-
 

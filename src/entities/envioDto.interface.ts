@@ -7,6 +7,8 @@ export interface EnvioDto {
   apellido_destinatario: string;
   cedula_remitente: string;
   cedula_destinatario: string;
+  telefono_remitente :string;
+  telefono_destinatario: string;
   direccion_envio: string;
   direccion_destino: string;
   peso: number;

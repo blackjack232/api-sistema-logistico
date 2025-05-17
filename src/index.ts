@@ -2,7 +2,7 @@ import app from './app';
 import { createServer } from 'http';
 import { setupSwagger } from './config/swagger';
 
-const PORT = process.env.PORT ?? 3001;
+const PORT = process.env.PORT ?? 3002;
 
 setupSwagger(app);
 const server = createServer(app);

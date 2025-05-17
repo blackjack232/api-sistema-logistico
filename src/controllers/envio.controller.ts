@@ -1,14 +1,16 @@
 import { Request, Response } from "express";
 import { EnvioService } from "../services/envio.service";
-import { usuarioRepository } from "../repositories/usuario.repository";
 import { successResponse, errorResponse } from "../utils/response";
 import { EnvioDto} from "../entities/envioDto.interface";
+import { UsuarioRepository } from "../repositories/usuario.repository";
 
 export class EnvioController {
   private readonly envioService: EnvioService;
+  private readonly usuarioRepository : UsuarioRepository;
 
   constructor() {
-    this.envioService = new EnvioService(usuarioRepository);
+    this.usuarioRepository = new UsuarioRepository();
+    this.envioService = new EnvioService(this.usuarioRepository);
   }
 
   public crearEnvio = async (req: Request, res: Response) => {

@@ -8,6 +8,8 @@ export interface Envio {
   cedula_destinatario: string;
   direccion_envio: string;
   direccion_destino: string;
+  telefono_remitente :string;
+  telefono_destinatario: string;
   peso: number;
   ancho?: number;
   alto?: number;

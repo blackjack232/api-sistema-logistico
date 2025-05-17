@@ -7,4 +7,9 @@ export interface Usuario {
   contrasena: string;
   tipo_usuario_id: number;
   activo :number;
+  telefono: string;
+  fecha_creacion: Date;
+  usuario_creacion: string;
+  fecha_modificacion: Date;
+  usuario_modificacion: string;
 }

@@ -1,7 +1,10 @@
 import { Router } from 'express';
-import { obtenerUsuarios, registrarUsuarioController, loginController } from '../controllers/usuario.controller';
+import { UsuarioController } from '../controllers/usuario.controller';
+import { UsuarioRepository } from '../repositories/usuario.repository';
 
 const router = Router();
+const usuarioRepository = new UsuarioRepository();
+const usuarioController = new UsuarioController(usuarioRepository);
 /**
  * @swagger
  * /usuario:
@@ -11,7 +14,7 @@ const router = Router();
  *       200:
  *         description: Lista de usuarios
  */
-router.get('/', obtenerUsuarios);
+router.get('/', usuarioController.obtenerUsuarios);
 
 /**
  * @swagger
@@ -55,8 +58,8 @@ router.get('/', obtenerUsuarios);
  *         description: Error del servidor
  */
 
-router.post('/registro', registrarUsuarioController);
+router.post('/registro', usuarioController.registrarUsuarioController);
 
-router.post('/login', loginController);
+router.post('/login', usuarioController.loginController);
 
 export default router;
