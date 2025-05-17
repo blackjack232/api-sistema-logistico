@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { UsuarioController } from '../controllers/usuario.controller';
 import { UsuarioRepository } from '../repositories/usuario.repository';
+import { verificarToken } from '../middlewares/auth.middleware';
 
 const router = Router();
 const usuarioRepository = new UsuarioRepository();
@@ -12,11 +13,13 @@ const usuarioController = new UsuarioController(usuarioRepository);
  *     summary: Obtener todos los usuarios
  *     tags:
  *       - Usuario
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Lista de usuarios
  */
-router.get('/', usuarioController.obtenerUsuarios);
+router.get('/',verificarToken, usuarioController.obtenerUsuarios);
 
 /**
  * @swagger
@@ -25,6 +28,8 @@ router.get('/', usuarioController.obtenerUsuarios);
  *     summary: Registrar un nuevo usuario
  *     tags:
  *       - Usuario
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -62,7 +67,7 @@ router.get('/', usuarioController.obtenerUsuarios);
  *         description: Error del servidor
  */
 
-router.post('/registro', usuarioController.registrarUsuarioController);
+router.post('/registro',verificarToken, usuarioController.registrarUsuarioController);
 /**
  * @swagger
  * /usuario/login:
