@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { EnvioController } from "../controllers/envio.controller";
+import { verificarToken } from "../middlewares/auth.middleware";
 
 const router = Router();
 const envioController = new EnvioController();
@@ -12,6 +13,8 @@ const envioController = new EnvioController();
  *     tags:
  *       - Envío
  *     description: Crea un nuevo registro de envío en el sistema logístico.
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -112,7 +115,7 @@ const envioController = new EnvioController();
  *       500:
  *         description: Error del servidor
  */
-router.post("/", envioController.crearEnvio);
+router.post("/", verificarToken ,envioController.crearEnvio);
 
 
 export default router;

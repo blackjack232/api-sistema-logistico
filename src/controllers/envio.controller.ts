@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { EnvioService } from "../services/envio.service";
 import { successResponse, errorResponse } from "../utils/response";
 import { EnvioDto} from "../entities/envioDto.interface";
@@ -13,7 +13,7 @@ export class EnvioController {
     this.envioService = new EnvioService(this.usuarioRepository);
   }
 
-  public crearEnvio = async (req: Request, res: Response) => {
+  public crearEnvio = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const datosEnvio: EnvioDto = req.body;
       const nuevoEnvio = await this.envioService.crearEnvio(datosEnvio);
