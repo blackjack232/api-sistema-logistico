@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import usuarioRoutes from './usuario.routes';
+import envioRoutes from './envio.routes';
 
 const router = Router();
 
@@ -8,4 +9,5 @@ router.get('/status', (_req, res) => {
 });
 
 router.use('/usuario', usuarioRoutes);
+router.use('/envio', envioRoutes);
 export default router;

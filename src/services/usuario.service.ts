@@ -1,8 +1,8 @@
-import { Usuario } from '../entities/usuario';
+import { Usuario } from '../entities/usuario.interface';
 import { usuarioRepository } from '../repositories/usuario.repository';
 import bcrypt from 'bcrypt';
 import { generarToken } from '../utils/jwt'; 
-import { IUsuarioService } from '../interfaces/service/IUsuarioService ';
+import { IUsuarioService } from '../interfaces/service/IUsuarioService.interface ';
 export const usuarioService: IUsuarioService = {
   obtenerUsuarios: async () => {
     return await usuarioRepository.obtenerUsuarios();

@@ -1,4 +1,4 @@
-import { Usuario } from "../../entities/usuario";
+import { Usuario } from "../../entities/usuario.interface";
 
 export interface IUsuarioRepository {
   obtenerUsuarios(): Promise<Usuario[]>;

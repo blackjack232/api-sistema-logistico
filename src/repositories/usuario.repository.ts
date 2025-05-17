@@ -1,7 +1,7 @@
 
 import pool from '../config/database';
-import { Usuario } from '../entities/usuario';
-import { IUsuarioRepository } from '../interfaces/repository/IUsuarioRepository';
+import { Usuario } from '../entities/usuario.interface';
+import { IUsuarioRepository } from '../interfaces/repository/IUsuarioRepository.interface';
 import { INSERT_USUARIO_QUERY, SELECT_USUARIOS_QUERY , BUSCAR_USUARIO_POR_IDENTIFICACION_QUERY} from '../sql/usuario.queries';
 export const usuarioRepository: IUsuarioRepository = {
   async obtenerUsuarios(): Promise<Usuario[]> {
@@ -18,7 +18,8 @@ export const usuarioRepository: IUsuarioRepository = {
         usuario.identificacion,
         usuario.correo_electronico,
         usuario.contrasena,
-        usuario.tipo_usuario_id
+        usuario.tipo_usuario_id,
+        usuario.activo
       ]
     );
     return result.rows[0];
