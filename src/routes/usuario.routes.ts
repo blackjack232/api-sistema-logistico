@@ -23,7 +23,7 @@ router.get('/',verificarToken, usuarioController.obtenerUsuarios);
 
 /**
  * @swagger
- * /usuario:
+ * /usuario/registro:
  *   post:
  *     summary: Registrar un nuevo usuario
  *     tags:
@@ -39,9 +39,12 @@ router.get('/',verificarToken, usuarioController.obtenerUsuarios);
  *             required:
  *               - nombre
  *               - apellido
+ *               - identificacion
  *               - correo_electronico
  *               - contrasena
  *               - tipo_usuario_id
+ *               - activo
+ *               - telefono
  *             properties:
  *               nombre:
  *                 type: string
@@ -49,6 +52,9 @@ router.get('/',verificarToken, usuarioController.obtenerUsuarios);
  *               apellido:
  *                 type: string
  *                 example: Pérez
+ *               identificacion:
+ *                 type: string
+ *                 example: 123456789
  *               correo_electronico:
  *                 type: string
  *                 example: juan.perez@example.com
@@ -58,16 +64,23 @@ router.get('/',verificarToken, usuarioController.obtenerUsuarios);
  *               tipo_usuario_id:
  *                 type: integer
  *                 example: 1
+ *               activo:
+ *                 type: integer
+ *                 example: 1
+ *               telefono:
+ *                 type: string
+ *                 example: "3001234567"
  *     responses:
  *       201:
  *         description: Usuario creado exitosamente
  *       400:
  *         description: Datos inválidos
+ *       401:
+ *         description: No autorizado
  *       500:
  *         description: Error del servidor
  */
-
-router.post('/registro',verificarToken, usuarioController.registrarUsuarioController);
+router.post('/registro', verificarToken, usuarioController.registrarUsuarioController);
 /**
  * @swagger
  * /usuario/login:
@@ -88,7 +101,7 @@ router.post('/registro',verificarToken, usuarioController.registrarUsuarioContro
  *             properties:
  *               correo_electronico:
  *                 type: string
- *                 example: juan.perez@example.com
+ *                 example: juan.pez@example.com
  *               contrasena:
  *                 type: string
  *                 example: contraseña123

@@ -8,9 +8,9 @@ export class EnvioController {
   private readonly envioService: EnvioService;
   private readonly usuarioRepository : UsuarioRepository;
 
-  constructor() {
-    this.usuarioRepository = new UsuarioRepository();
-    this.envioService = new EnvioService(this.usuarioRepository);
+   constructor(envioService?: EnvioService, usuarioRepository?: UsuarioRepository) {
+    this.usuarioRepository = usuarioRepository ?? new UsuarioRepository();
+    this.envioService = envioService ?? new EnvioService(this.usuarioRepository);
   }
 
   public crearEnvio = async (req: Request, res: Response, next: NextFunction) => {
