@@ -12,16 +12,26 @@ const options = {
     },
     servers: [
       {
-        url: 'http://localhost:3001/api', 
+        url: 'http://localhost:3002/api',
       },
     ],
-     tags: [
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
+    },
+    tags: [
       { name: 'Usuario', description: 'Operaciones de usuario' },
-      { name: 'Envío', description: 'Operaciones de envío' }
-    ]
+      { name: 'Envío', description: 'Operaciones de envío' },
+    ],
   },
-  apis: ['src/routes/*.ts'], 
+  apis: ['src/routes/*.ts'],
 };
+
 
 const swaggerSpec = swaggerJSDoc(options);
 

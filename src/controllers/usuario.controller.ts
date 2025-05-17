@@ -47,6 +47,7 @@ export class UsuarioController {
   loginController = async (req: Request, res: Response) => {
     const { correo_electronico, contrasena } = req.body;
     try {
+      console.log("Login usuario:", req.body);
       const result = await this.usuarioService.login(correo_electronico, contrasena);
       res.json(successResponse("Inicio de sesión exitoso", result));
     } catch (err) {
