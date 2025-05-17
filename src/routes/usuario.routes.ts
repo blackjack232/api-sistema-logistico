@@ -10,6 +10,8 @@ const usuarioController = new UsuarioController(usuarioRepository);
  * /usuario:
  *   get:
  *     summary: Obtener todos los usuarios
+ *     tags:
+ *       - Usuario
  *     responses:
  *       200:
  *         description: Lista de usuarios
@@ -21,6 +23,8 @@ router.get('/', usuarioController.obtenerUsuarios);
  * /usuario:
  *   post:
  *     summary: Registrar un nuevo usuario
+ *     tags:
+ *       - Usuario
  *     requestBody:
  *       required: true
  *       content:
@@ -59,7 +63,57 @@ router.get('/', usuarioController.obtenerUsuarios);
  */
 
 router.post('/registro', usuarioController.registrarUsuarioController);
-
+/**
+ * @swagger
+ * /usuario/login:
+ *   post:
+ *     summary: Iniciar sesión de usuario
+ *     tags:
+ *       - Usuario
+ *     description: Permite a un usuario iniciar sesión con su correo electrónico y contraseña.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - correo_electronico
+ *               - contrasena
+ *             properties:
+ *               correo_electronico:
+ *                 type: string
+ *                 example: juan.perez@example.com
+ *               contrasena:
+ *                 type: string
+ *                 example: contraseña123
+ *     responses:
+ *       200:
+ *         description: Inicio de sesión exitoso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 esExitoso:
+ *                   type: boolean
+ *                   example: true
+ *                 mensaje:
+ *                   type: string
+ *                   example: Inicio de sesión exitoso
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     token:
+ *                       type: string
+ *                       example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+ *       400:
+ *         description: Datos inválidos
+ *       401:
+ *         description: Credenciales incorrectas
+ *       500:
+ *         description: Error del servidor
+ */
 router.post('/login', usuarioController.loginController);
 
 export default router;
