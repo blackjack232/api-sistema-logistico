@@ -1,6 +1,7 @@
+import { EnvioDto } from "../../entities/envioDto.interface";
 
-import { Envio } from '../../entities/envioDto.interface';
+
 
 export interface IEnvioService {
-  crearEnvio(envio: Envio): Promise<Envio>;
+  crearEnvio(envio: EnvioDto): Promise<EnvioDto>;
 }
