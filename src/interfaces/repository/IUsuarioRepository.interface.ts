@@ -5,4 +5,5 @@ export interface IUsuarioRepository {
   registrarUsuario(usuario: Omit<Usuario, 'id'>): Promise<Usuario>;
   buscarUsuarioByEmail(correo: string): Promise<Usuario | null>;
   buscarUsuarioPorIdentificacion(identificacion: string): Promise<Usuario | null>;
+  
 }

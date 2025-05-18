@@ -3,12 +3,13 @@
     "target": "ES6",
     "module": "CommonJS",
     "outDir": "./dist",
-    "rootDir": "./src",
+    "rootDir": ".",
     "strict": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "types": ["jest", "node"]
   },
-  "include": ["src", "api-sistema-logistico/src"],
+  "include": ["src", "api-sistema-logistico/src","test", "jest.config.js"],
   "exclude": ["node_modules"]
 }
