@@ -43,7 +43,6 @@ export class EnvioController {
         rutaId,
         transportistaId
       );
-
       res.status(200).json(successResponse("Envío asignado correctamente.", envioActualizado));
     } catch (error) {
       console.error(error);
