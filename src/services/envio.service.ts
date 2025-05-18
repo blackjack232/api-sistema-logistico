@@ -1,5 +1,7 @@
 import { Envio } from "../entities/envio.interface";
 import { EnvioDto } from "../entities/envioDto.interface";
+import { Ruta } from "../entities/ruta.interface";
+import { Transportista } from "../entities/transportista.interface";
 import { IEnvioRepository } from "../interfaces/repository/IEnvioRepository .interface";
 import { IUsuarioRepository } from "../interfaces/repository/IUsuarioRepository.interface";
 import { IEnvioService } from "../interfaces/service/IEnvioRepository.interface";
@@ -14,6 +16,7 @@ export class EnvioService implements IEnvioService {
     this.envioRepository = new EnvioRepository();
     this.usuarioRepository = usuarioRepository;
   }
+
 
   async crearEnvio(envio: EnvioDto): Promise<EnvioDto> {
     // Buscar remitente
@@ -132,5 +135,18 @@ export class EnvioService implements IEnvioService {
     const timestamp = Date.now(); // número único basado en tiempo
     const aleatorio = Math.floor(1000 + Math.random() * 9000); // 4 dígitos aleatorios
     return `${prefijo}-${timestamp}-${aleatorio}`;
+  }
+
+  async obtenerRuta(idRuta: number): Promise<Ruta> {
+    return await this.envioRepository.obtenerRuta(idRuta);
+  }
+  async obtenerTransportista(idTransportista: number): Promise<Transportista> {
+    return await this.envioRepository.obtenerTransportista(idTransportista);
+  }
+  async asignarRutaYTransportista(idEnvio: number, idRuta: number, idTransportista: number): Promise<Envio> {
+
+    const envioActualizado = await this.envioRepository.actualizarEnvio(idEnvio, idRuta, idTransportista);
+
+    return envioActualizado;
   }
 }

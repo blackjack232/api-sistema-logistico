@@ -8,9 +8,9 @@ export class EnvioController {
   private readonly envioService: EnvioService;
   private readonly usuarioRepository : UsuarioRepository;
 
-  constructor() {
-    this.usuarioRepository = new UsuarioRepository();
-    this.envioService = new EnvioService(this.usuarioRepository);
+   constructor(envioService?: EnvioService, usuarioRepository?: UsuarioRepository) {
+    this.usuarioRepository = usuarioRepository ?? new UsuarioRepository();
+    this.envioService = envioService ?? new EnvioService(this.usuarioRepository);
   }
 
   public crearEnvio = async (req: Request, res: Response, next: NextFunction) => {
@@ -21,6 +21,33 @@ export class EnvioController {
     } catch (error) {
       console.error("Error al crear el envío:", error);
       res.status(400).json(errorResponse("No se pudo crear el envío", (error as Error).message));
+    }
+  };
+  public asignarRutaYTransportista = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { envioId, rutaId, transportistaId } = req.body;
+
+      const ruta = await this.envioService.obtenerRuta(rutaId);
+      const transportista = await this.envioService.obtenerTransportista(transportistaId);
+
+      if (!ruta || ruta.disponible !== 1 || ruta.estado !== 1) {
+        return res.status(400).json(errorResponse("Ruta no disponible o inactiva."));
+      }
+
+      if (!transportista || transportista.disponible !== 1 || transportista.estado !== 1) {
+        return res.status(400).json(errorResponse("Transportista no disponible o inactivo."));
+      }
+
+      const envioActualizado = await this.envioService.asignarRutaYTransportista(
+        envioId,
+        rutaId,
+        transportistaId
+      );
+
+      res.status(200).json(successResponse("Envío asignado correctamente.", envioActualizado));
+    } catch (error) {
+      console.error(error);
+      res.status(500).json(errorResponse("Error al asignar envío.", (error as Error).message));
     }
   };
 
