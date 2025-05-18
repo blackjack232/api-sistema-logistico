@@ -28,8 +28,6 @@ router.get('/',verificarToken, usuarioController.obtenerUsuarios);
  *     summary: Registrar un nuevo usuario
  *     tags:
  *       - Usuario
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -80,7 +78,7 @@ router.get('/',verificarToken, usuarioController.obtenerUsuarios);
  *       500:
  *         description: Error del servidor
  */
-router.post('/registro', verificarToken, usuarioController.registrarUsuarioController);
+router.post('/registro', usuarioController.registrarUsuarioController);
 /**
  * @swagger
  * /usuario/login:
