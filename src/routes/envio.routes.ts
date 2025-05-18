@@ -117,5 +117,64 @@ const envioController = new EnvioController();
  */
 router.post("/", verificarToken ,envioController.crearEnvio);
 
-
+/**
+ * @swagger
+ * /envio/asignar-ruta:
+ *   post:
+ *     summary: Asignar ruta y transportista a un envío
+ *     tags:
+ *       - Envío
+ *     security:
+ *       - bearerAuth: []
+ *     description: Asigna una ruta y un transportista a un envío existente.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - envio_id
+ *               - ruta_id
+ *               - transportista_id
+ *             properties:
+ *               envio_id:
+ *                 type: integer
+ *                 example: 1
+ *               ruta_id:
+ *                 type: integer
+ *                 example: 5
+ *               transportista_id:
+ *                 type: integer
+ *                 example: 3
+ *     responses:
+ *       200:
+ *         description: Ruta y transportista asignados correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 esExitoso:
+ *                   type: boolean
+ *                   example: true
+ *                 mensaje:
+ *                   type: string
+ *                   example: Ruta y transportista asignados correctamente
+ *                 data:
+ *                   type: object
+ *       400:
+ *         description: Datos inválidos
+ *       401:
+ *         description: No autorizado
+ *       500:
+ *         description: Error del servidor
+ */
+router.post(
+  "/asignar-ruta",
+  verificarToken,
+  (req, res, next) => {
+	Promise.resolve(envioController.asignarRutaYTransportista(req, res, next)).catch(next);
+  }
+);
 export default router;
