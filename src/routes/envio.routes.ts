@@ -170,4 +170,51 @@ router.post(
 	Promise.resolve(envioController.asignarRutaYTransportista(req, res, next)).catch(next);
   }
 );
+
+/**
+ * @swagger
+* /envio/rastrear-envio:
+ *   get:
+ *     summary: Consultar envío por número de guía
+ *     tags:
+ *       - Envío
+ *     security:
+ *       - bearerAuth: []
+ *     description: Consulta la información de un envío usando el número de guía.
+ *     parameters:
+ *       - in: query
+ *         name: numero_guia
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Número de guía del envío a consultar
+ *         example: "GUIA-123456"
+ *     responses:
+ *       200:
+ *         description: Información del envío encontrada
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 esExitoso:
+ *                   type: boolean
+ *                   example: true
+ *                 mensaje:
+ *                   type: string
+ *                   example: Envío encontrado correctamente
+ *                 data:
+ *                   type: object
+ *       400:
+ *         description: Parámetro inválido o faltante
+ *       401:
+ *         description: No autorizado
+ *       404:
+ *         description: Envío no encontrado
+ *       500:
+ *         description: Error del servidor
+ */
+router.get('/rastrear-envio', verificarToken, (req, res, next) => {
+  Promise.resolve(envioController.rastrearEnvioPorGuia(req, res, next)).catch(next);
+});
 export default router;

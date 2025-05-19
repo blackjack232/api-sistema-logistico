@@ -76,4 +76,28 @@ export const INSERT_ENVIO_QUERY = `
   )
   RETURNING *;
 `;
+export const BUSCAR_ENVIO_POR_NUMERO_GUIA_QUERY = `
+  SELECT 
+    id,
+    numero_guia,
+    usuario_remitente_id,
+    usuario_destinatario_id,
+    cedula_remitente,
+    cedula_destinatario,
+    direccion_envio,
+    direccion_destino,
+    telefono_remitente,
+    telefono_destinatario,
+    peso,
+    ancho,
+    alto,
+    tipo_producto,
+    estado,
+    fecha_creacion,
+    fecha_modificacion,
+    usuario_creacion_id,
+    usuario_modificacion_id
+  FROM envio
+  WHERE numero_guia = $1
+`;
 
