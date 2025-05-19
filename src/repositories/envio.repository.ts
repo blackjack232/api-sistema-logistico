@@ -3,9 +3,15 @@ import { Envio } from "../entities/envio.interface";
 import { Ruta } from "../entities/ruta.interface";
 import { Transportista } from "../entities/transportista.interface";
 import { IEnvioRepository } from "../interfaces/repository/IEnvioRepository .interface";
-import { INSERT_ENVIO_QUERY } from "../sql/usuario.queries";
+import { BUSCAR_ENVIO_POR_NUMERO_GUIA_QUERY, INSERT_ENVIO_QUERY } from "../sql/usuario.queries";
 
 export class EnvioRepository implements IEnvioRepository {
+
+async buscarPorNumeroGuia(numeroGuia: string): Promise<Envio | null> {
+  const { rows } = await pool.query(BUSCAR_ENVIO_POR_NUMERO_GUIA_QUERY, [numeroGuia]);
+  return rows[0] ?? null;
+}
+
   async actualizarEnvio(idEnvio: number, idRuta: number, idTransportista: number): Promise<Envio> {
     const updateQuery = `
       UPDATE envios

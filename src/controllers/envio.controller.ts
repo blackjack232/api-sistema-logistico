@@ -49,5 +49,29 @@ export class EnvioController {
       res.status(500).json(errorResponse("Error al asignar envío.", (error as Error).message));
     }
   };
+public rastrearEnvioPorGuia = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const numeroGuia = req.query.numero_guia as string;
+
+    if (!numeroGuia) {
+      return res
+        .status(400)
+        .json(errorResponse("Número de guía requerido"));
+    }
+
+    const envio = await this.envioService.buscarPorNumeroGuia(numeroGuia);
+
+    if (!envio) {
+      return res
+        .status(404)
+        .json(errorResponse("Envío no encontrado"));
+    }
+
+    res.status(200).json(successResponse("Envío encontrado", envio));
+  } catch (error) {
+    console.error("Error al rastrear el envío:", error);
+    res.status(500).json(errorResponse("Error interno al rastrear el envío", (error as Error).message));
+  }
+};
 
 }
