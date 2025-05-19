@@ -8,4 +8,5 @@ export interface IEnvioService {
   obtenerRuta(idRuta: number): Promise<Ruta>;
   obtenerTransportista(idTransportista: number): Promise<Transportista>;
   asignarRutaYTransportista(idEnvio: number, idRuta: number, idTransportista: number): Promise<Envio>;
+  buscarPorNumeroGuia(numeroGuia: string): Promise<Envio>;
 }

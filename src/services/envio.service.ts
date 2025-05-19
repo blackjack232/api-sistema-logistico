@@ -18,6 +18,15 @@ export class EnvioService implements IEnvioService {
   }
 
 
+  async buscarPorNumeroGuia(numeroGuia: string): Promise<Envio> {
+    const envio = await this.envioRepository.buscarPorNumeroGuia(numeroGuia);
+    if (!envio) {
+      throw new Error(`No se encontró un envío con el número de guía: ${numeroGuia}`);
+    }
+    return envio;
+  }
+
+
   async crearEnvio(envio: EnvioDto): Promise<EnvioDto> {
     const remitente =
       await this.usuarioRepository.buscarUsuarioPorIdentificacion(

@@ -7,4 +7,5 @@ export interface IEnvioRepository {
   obtenerRuta(idRuta: number): Promise<Ruta> ;
   obtenerTransportista(idTransportista: number): Promise<Transportista> ;
   actualizarEnvio(idEnvio: number, idRuta:number, idTransportista : number): Promise<Envio>;
+   buscarPorNumeroGuia(numeroGuia: string): Promise<Envio | null>;
 }
