@@ -8,6 +8,24 @@ const usuarioRepository = new UsuarioRepository();
 const usuarioController = new UsuarioController(usuarioRepository);
 /**
  * @swagger
+ * components:
+ *   schemas:
+ *     Usuario:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: number
+ *         id_rol:
+ *           type: number
+ *         nombre_rol:
+ *           type: string
+ *         nombre_usuario:
+ *           type: string
+ *         apellido_usuario:
+ *           type: string
+ *         correo:
+ *           type: string
+
  * /usuario:
  *   get:
  *     summary: Obtener todos los usuarios
@@ -18,8 +36,15 @@ const usuarioController = new UsuarioController(usuarioRepository);
  *     responses:
  *       200:
  *         description: Lista de usuarios
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Usuario'
  */
-router.get('/',verificarToken, usuarioController.obtenerUsuarios);
+router.get('/', verificarToken, usuarioController.obtenerUsuarios);
+
 
 /**
  * @swagger
