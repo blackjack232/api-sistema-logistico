@@ -1,11 +1,13 @@
 import pool from '../config/database';
 import { Usuario } from '../entities/usuario.interface';
+import { UsuarioConRol } from '../entities/usuarioConRol.interface';
+import { UsuarioActivo } from '../entities/usuariosActivos';
 import { IUsuarioRepository } from '../interfaces/repository/IUsuarioRepository.interface';
-import { INSERT_USUARIO_QUERY, SELECT_USUARIOS_QUERY, BUSCAR_USUARIO_POR_IDENTIFICACION_QUERY } from '../sql/usuario.queries';
+import { INSERT_USUARIO_QUERY, SELECT_USUARIOS_QUERY, BUSCAR_USUARIO_POR_IDENTIFICACION_QUERY, OBTENER_USUARIOS_ACTIVOS } from '../sql/usuario.queries';
 
 export class UsuarioRepository implements IUsuarioRepository {
-  async obtenerUsuarios(): Promise<Usuario[]> {
-    const result = await pool.query('SELECT * FROM usuario');
+  async obtenerUsuarios(): Promise<UsuarioActivo[]> {
+    const result = await pool.query(OBTENER_USUARIOS_ACTIVOS);
     return result.rows;
   }
 
@@ -31,7 +33,7 @@ export class UsuarioRepository implements IUsuarioRepository {
     return result.rows[0];
   }
 
-  async buscarUsuarioByEmail(correo: string): Promise<Usuario | null> {
+  async buscarUsuarioByEmail(correo: string): Promise<UsuarioConRol | null> {
     const result = await pool.query(SELECT_USUARIOS_QUERY, [correo]);
     return result.rows[0] ?? null;
   }

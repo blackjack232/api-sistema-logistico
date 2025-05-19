@@ -19,7 +19,6 @@ export class EnvioService implements IEnvioService {
 
 
   async crearEnvio(envio: EnvioDto): Promise<EnvioDto> {
-    // Buscar remitente
     const remitente =
       await this.usuarioRepository.buscarUsuarioPorIdentificacion(
         envio.cedula_remitente
@@ -28,22 +27,21 @@ export class EnvioService implements IEnvioService {
     let remitenteId: number;
     if (!remitente) {
       const remitenteNuevo = {
-        nombre: envio.nombre_remitente || "Remitente", // Asumir campos
+        nombre: envio.nombre_remitente || "Remitente", 
         apellido: envio.apellido_remitente || "Sin apellido",
         identificacion: envio.cedula_remitente,
         correo_electronico: this.generarCorreoAleatorio(
           envio.nombre_remitente,
           envio.apellido_remitente
         ),
-        contrasena: "123456", // Mejor generar password aleatorio o manejar en otro lado
-        tipo_usuario_id: 2, // Asumir tipo de usuario, ej: cliente
+        contrasena: "123456", 
+        tipo_usuario_id: 2, 
         activo: 1,
         telefono: envio.telefono_destinatario, 
         fecha_creacion: new Date(),
         usuario_creacion: "API",
         fecha_modificacion: new Date(),
         usuario_modificacion: "API",
-        
       };
       const usuarioCreado = await this.usuarioRepository.registrarUsuario(
         remitenteNuevo
@@ -103,17 +101,14 @@ export class EnvioService implements IEnvioService {
       ancho: envio.ancho,
       alto: envio.alto,
       tipo_producto: envio.tipo_producto,
-      estado: "En espera", // valor por defecto si no se proporciona
+      estado: "En espera", 
       fecha_creacion: new Date(),
-      fecha_modificacion: new Date(),
       usuario_creacion_id: envio.usuario_creacion_id,
-      usuario_modificacion_id: envio.usuario_modificacion_id,
     };
 
     // Insertar envío
     const envioCreado = await this.envioRepository.crearEnvio(nuevoEnvio);
-    console.log("envioCreado", envioCreado);
-    // Retornar EnvioDto con los campos requeridos
+
     return {
       ...envioCreado,
       nombre_remitente: envio.nombre_remitente,
@@ -132,8 +127,8 @@ export class EnvioService implements IEnvioService {
   }
   private generarNumeroGuia(): string {
     const prefijo = "GUIA";
-    const timestamp = Date.now(); // número único basado en tiempo
-    const aleatorio = Math.floor(1000 + Math.random() * 9000); // 4 dígitos aleatorios
+    const timestamp = Date.now(); 
+    const aleatorio = Math.floor(1000 + Math.random() * 9000); 
     return `${prefijo}-${timestamp}-${aleatorio}`;
   }
 

@@ -18,16 +18,35 @@ export const INSERT_USUARIO_QUERY = `
 
 export const SELECT_USUARIOS_QUERY = `
   SELECT 
+    u.id,
+    ro.nombre,
+    ro.id as id_rol,   
     u.nombre AS nombre_usuario, 
     u.apellido AS apellido_usuario, 
-    u.identificacion, 
     u.correo_electronico AS correo, 
     u.contrasena,
-    u.tipo_usuario_id 
+    u.activo
   FROM usuario u 
+  JOIN rol ro ON u.tipo_usuario_id = ro.id
   WHERE u.correo_electronico = $1;
 `;
-
+export const OBTENER_USUARIOS_ACTIVOS = `
+  SELECT 
+  u.id,
+  u.nombre,
+  u.apellido,
+  u.identificacion,
+  u.correo_electronico,
+  u.contrasena,
+  u.tipo_usuario_id,
+  u.activo,
+  u.telefono,
+  u.fecha_creacion,
+  r.nombre
+FROM usuario u
+JOIN rol r ON u.tipo_usuario_id = r.id
+WHERE u.activo = 1;
+`;
 export const BUSCAR_USUARIO_POR_IDENTIFICACION_QUERY = `SELECT u.identificacion, u.id FROM usuario u WHERE identificacion = $1`;
 
 export const INSERT_ENVIO_QUERY = `
