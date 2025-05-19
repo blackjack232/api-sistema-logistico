@@ -17,7 +17,5 @@ export interface EnvioDto {
   tipo_producto?: string;
   estado?: string; 
   fecha_creacion?: Date;
-  fecha_modificacion?: Date;
   usuario_creacion_id: number;
-  usuario_modificacion_id?: number;
 }

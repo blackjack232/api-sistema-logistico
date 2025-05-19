@@ -84,16 +84,9 @@ const envioController = new EnvioController();
  *                 type: string
  *                 format: date-time
  *                 example: "2024-05-17T12:00:00Z"
- *               fecha_modificacion:
- *                 type: string
- *                 format: date-time
- *                 example: "2024-05-17T12:00:00Z"
  *               usuario_creacion_id:
  *                 type: integer
  *                 example: 1
- *               usuario_modificacion_id:
- *                 type: integer
- *                 example: 2
  *     responses:
  *       201:
  *         description: Envío creado exitosamente
