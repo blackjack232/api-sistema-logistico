@@ -9,4 +9,13 @@ export interface IEnvioService {
   obtenerTransportista(idTransportista: number): Promise<Transportista>;
   asignarRutaYTransportista(idEnvio: number, idRuta: number, idTransportista: number): Promise<Envio>;
   buscarPorNumeroGuia(numeroGuia: string): Promise<Envio>;
+   obtenerEstadoActualEnvio(numeroGuia: string): Promise<{ estado: string }>;
+  cambiarEstadoEnvio(
+    numeroGuia: string,
+    nuevoEstado: string,
+    usuarioModificacionId: number
+  ): Promise<{ envioId: number; nuevoEstado: string }>;
+  obtenerHistorialEstados(
+    numeroGuia: string
+  ): Promise<{ estado: string; fecha: string }[]>;
 }
