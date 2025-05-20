@@ -136,10 +136,10 @@ router.post("/", verificarToken ,envioController.crearEnvio);
  *                 example: 1
  *               ruta_id:
  *                 type: integer
- *                 example: 5
+ *                 example: 1
  *               transportista_id:
  *                 type: integer
- *                 example: 3
+ *                 example: 1
  *     responses:
  *       200:
  *         description: Ruta y transportista asignados correctamente
@@ -216,5 +216,144 @@ router.post(
  */
 router.get('/rastrear-envio', verificarToken, (req, res, next) => {
   Promise.resolve(envioController.rastrearEnvioPorGuia(req, res, next)).catch(next);
+});
+
+/**
+ * @swagger
+ * /envio/estado-actual/{numeroGuia}:
+ *   get:
+ *     summary: Consultar el estado actual de un envío
+ *     tags:
+ *       - Envío
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: numeroGuia
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Número de guía del envío
+ *     responses:
+ *       200:
+ *         description: Estado actual del envío
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 estado:
+ *                   type: string
+ *                   example: "En tránsito"
+ *       400:
+ *         description: Parámetro inválido o faltante
+ *       401:
+ *         description: No autorizado
+ *       404:
+ *         description: Envío no encontrado
+ *       500:
+ *         description: Error del servidor
+ */
+router.get('/estado-actual/:numeroGuia', verificarToken, envioController.obtenerEstadoActualEnvio);
+/**
+ * @swagger
+ * /envio/actulizar-estado/{numeroGuia}:
+ *   post:
+ *     summary: Cambiar el estado de un envío
+ *     tags:
+ *       - Envío
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: numeroGuia
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Número de guía del envío
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - nuevoEstado
+ *               - usuarioModificacionId
+ *             properties:
+ *               nuevoEstado:
+ *                 type: string
+ *                 example: "Entregado"
+ *               usuarioModificacionId:
+ *                 type: integer
+ *                 example: 2
+ *     responses:
+ *       200:
+ *         description: Estado del envío actualizado correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 envioId:
+ *                   type: integer
+ *                   example: 1
+ *                 nuevoEstado:
+ *                   type: string
+ *                   example: "Entregado"
+ *       400:
+ *         description: Datos inválidos
+ *       401:
+ *         description: No autorizado
+ *       404:
+ *         description: Envío no encontrado
+ *       500:
+ *         description: Error del servidor
+ */
+router.post('/actulizar-estado/:numeroGuia', verificarToken, envioController.cambiarEstadoEnvio);
+/**
+ * @swagger
+ * /envio/historial/{numeroGuia}:
+ *   get:
+ *     summary: Consultar el historial de estados de un envío
+ *     tags:
+ *       - Envío
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: numeroGuia
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Número de guía del envío
+ *     responses:
+ *       200:
+ *         description: Historial de estados del envío
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   estado:
+ *                     type: string
+ *                     example: "En tránsito"
+ *                   fecha:
+ *                     type: string
+ *                     format: date-time
+ *                     example: "2024-05-17T12:00:00Z"
+ *       400:
+ *         description: Parámetro inválido o faltante
+ *       401:
+ *         description: No autorizado
+ *       404:
+ *         description: Envío no encontrado
+ *       500:
+ *         description: Error del servidor
+ */
+router.get('/historial/:numeroGuia', verificarToken, (req, res, next) => {
+  Promise.resolve(envioController.obtenerHistorialEstados(req, res, next)).catch(next);
 });
 export default router;
