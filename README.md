@@ -17,3 +17,11 @@ Sigue estos pasos para ejecutar el proyecto en modo desarrollo:
 
 5. Una vez finalizada la instalación, ejecuta npm run dev para iniciar el servidor de desarrollo local.
 6. El servidor se iniciará en http://localhost:3002. Abre esa URL en tu navegador para ver la aplicación en funcionamiento.
+7. Puedes ejecutar las pruebas unitarias con el siguiente comando: npx test.
+
+🌐 Versión en línea
+Si deseas consultar la versión desplegada de la API, puedes acceder a la siguiente URL:
+🔗 https://api-sistema-logistico.onrender.com/api-docs/
+
+⚠️ Nota: Esta versión está desactualizada, ya que no fue posible desplegar Redis en los servicios gratuitos de Render. Esto puede afectar el funcionamiento de algunas funcionalidades que dependen de Redis.
+
