@@ -28,7 +28,6 @@ export class UsuarioService implements IUsuarioService {
     const usuario = await this.usuarioRepository.buscarUsuarioByEmail(
       correo_electronico
     );
-    console.log("Usuario encontrado:", usuario);
     if (!usuario) throw new Error("Usuario no encontrado");
     if (usuario.activo === 0) throw new Error("Usuario inactivo");
 

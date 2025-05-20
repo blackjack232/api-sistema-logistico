@@ -16,6 +16,46 @@ export class EnvioService implements IEnvioService {
     this.envioRepository = new EnvioRepository();
     this.usuarioRepository = usuarioRepository;
   }
+  async obtenerEstadoActualEnvio(numeroGuia: string): Promise<{ estado: string; }> {
+    const envio = await this.envioRepository.buscarPorNumeroGuia(numeroGuia);
+    if (!envio) {
+      throw new Error(`No se encontró un envío con el número de guía: ${numeroGuia}`);
+    }
+    return { estado: envio.estado ?? "" };
+  }
+
+  async cambiarEstadoEnvio(
+    numeroGuia: string,
+    nuevoEstado: string,
+    usuarioModificacionId: number
+  ): Promise<{ envioId: number; nuevoEstado: string; }> {
+    const envio = await this.envioRepository.buscarPorNumeroGuia(numeroGuia);
+    if (!envio) {
+      throw new Error(`No se encontró un envío con el número de guía: ${numeroGuia}`);
+    }
+    const envioActualizado = await this.envioRepository.cambiarEstadoEnvio(
+      envio.numero_guia,
+      nuevoEstado,
+      usuarioModificacionId
+    );
+    if (envio.id === undefined) {
+      throw new Error("El envío no tiene un ID definido.");
+    }
+    return { envioId: envio.id, nuevoEstado: envioActualizado?.nuevoEstado ?? nuevoEstado };
+  }
+
+  async obtenerHistorialEstados(numeroGuia: string): Promise<{ estado: string; fecha: string; numero_guia:string; }[]> {
+    const historial = await this.envioRepository.obtenerHistorialEstados(numeroGuia);
+
+    if (!historial) {
+      throw new Error(`No se encontró historial para el número de guía: ${numeroGuia}`);
+    }
+    return historial.map((item: any) => ({
+      estado: item.estado,
+      fecha: item.fecha,
+      numero_guia : item.numero_guia
+    }));
+  }
 
 
   async buscarPorNumeroGuia(numeroGuia: string): Promise<Envio> {
@@ -32,7 +72,6 @@ export class EnvioService implements IEnvioService {
       await this.usuarioRepository.buscarUsuarioPorIdentificacion(
         envio.cedula_remitente
       );
-    console.log("remitenteid", remitente);
     let remitenteId: number;
     if (!remitente) {
       const remitenteNuevo = {
@@ -55,7 +94,6 @@ export class EnvioService implements IEnvioService {
       const usuarioCreado = await this.usuarioRepository.registrarUsuario(
         remitenteNuevo
       );
-      console.log("remitente registrado", usuarioCreado);
       remitenteId = usuarioCreado.id;
     } else {
       remitenteId = remitente.id;
@@ -66,7 +104,6 @@ export class EnvioService implements IEnvioService {
       await this.usuarioRepository.buscarUsuarioPorIdentificacion(
         envio.cedula_destinatario
       );
-    console.log("destinatarioid", destinatario);
     let destinatarioId: number;
     if (!destinatario) {
       const destinatarioNuevo = {
@@ -91,7 +128,6 @@ export class EnvioService implements IEnvioService {
       const usuarioCreado = await this.usuarioRepository.registrarUsuario(
         destinatarioNuevo
       );
-      console.log("destinatario registrado", usuarioCreado);
       destinatarioId = usuarioCreado.id;
     } else {
       destinatarioId = destinatario.id;

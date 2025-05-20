@@ -12,7 +12,6 @@ export class UsuarioRepository implements IUsuarioRepository {
   }
 
   async registrarUsuario(usuario: Omit<Usuario, 'id'>): Promise<Usuario> {
-    console.log('Registrar usuario:', usuario);
     const result = await pool.query(
       INSERT_USUARIO_QUERY,
       [
