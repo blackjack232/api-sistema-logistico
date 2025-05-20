@@ -102,13 +102,13 @@ export const BUSCAR_ENVIO_POR_NUMERO_GUIA_QUERY = `
 `;
 
 export const ACTUALIZAR_ENVIO_QUERY = `
-      UPDATE envios
-      SET ruta_id = $1, transportista_id = $2, fecha_modificacion = NOW()
-      WHERE id = $3
+      UPDATE envio
+      SET ruta_id = $1, transportista_id = $2, fecha_modificacion = $3
+      WHERE id = $4
       RETURNING *;
     `;
-export const OBTENER_RUTA_QUERY = `SELECT * FROM rutas WHERE id = $1`;
-export const OBTENER_TRANSPORTISTA_QUERY = `SELECT * FROM transportistas WHERE id = $1`;
+export const OBTENER_RUTA_QUERY = `SELECT r.id, r.estado, r.disponible FROM ruta r WHERE r.id = $1`;
+export const OBTENER_TRANSPORTISTA_QUERY = `SELECT t.id, t.estado, t.disponible  FROM transportista t WHERE t.id = $1`;
 export const OBTENER_ESTADO_ACTUAL_ENVIO_QUERY = `SELECT estado FROM envio WHERE numero_guia = $1`;
 export const CAMBIAR_ESTADO_ENVIO_QUERY = `UPDATE envio
        SET estado = $1, fecha_modificacion = $2, usuario_modificacion_id = $3

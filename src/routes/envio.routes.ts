@@ -136,10 +136,10 @@ router.post("/", verificarToken ,envioController.crearEnvio);
  *                 example: 1
  *               ruta_id:
  *                 type: integer
- *                 example: 5
+ *                 example: 1
  *               transportista_id:
  *                 type: integer
- *                 example: 3
+ *                 example: 1
  *     responses:
  *       200:
  *         description: Ruta y transportista asignados correctamente

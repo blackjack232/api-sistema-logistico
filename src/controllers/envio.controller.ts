@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import e, { NextFunction, Request, Response } from "express";
 import { EnvioService } from "../services/envio.service";
 import { successResponse, errorResponse } from "../utils/response";
 import { EnvioDto } from "../entities/envioDto.interface";
@@ -43,13 +43,14 @@ export class EnvioController {
     next: NextFunction
   ) => {
     try {
-      const { envioId, rutaId, transportistaId } = req.body;
-
-      const ruta = await this.envioService.obtenerRuta(rutaId);
+      const { envio_id, ruta_id, transportista_id } = req.body;
+console.log("Datos recibidos:",req.body.envio_Id, ruta_id, transportista_id);
+      const ruta = await this.envioService.obtenerRuta(ruta_id);
       const transportista = await this.envioService.obtenerTransportista(
-        transportistaId
+        transportista_id
       );
-
+ console.log("Ruta:", ruta);
+ console.log("Transportista:", transportista);
       if (!ruta || ruta.disponible !== 1 || ruta.estado !== 1) {
         return res
           .status(400)
@@ -68,9 +69,9 @@ export class EnvioController {
 
       const envioActualizado =
         await this.envioService.asignarRutaYTransportista(
-          envioId,
-          rutaId,
-          transportistaId
+          envio_id,
+          ruta_id,
+          transportista_id
         );
       res
         .status(200)

@@ -34,6 +34,7 @@ export class EnvioRepository implements IEnvioRepository {
     const { rows } = await pool.query(updateQuery, [
       idRuta,
       idTransportista,
+      new Date(),
       idEnvio,
     ]);
     if (rows.length === 0) {
@@ -69,7 +70,9 @@ export class EnvioRepository implements IEnvioRepository {
 
   async obtenerRuta(idRuta: number): Promise<Ruta> {
     const query = OBTENER_RUTA_QUERY;
+    console.log("ID Ruta:", idRuta);
     const { rows } = await pool.query(query, [idRuta]);
+    console.log("Rows:", rows[0]);
     if (rows.length === 0) {
       throw new Error("Ruta no encontrada");
     }
